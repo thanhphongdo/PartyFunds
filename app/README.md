@@ -20,12 +20,12 @@ $ npm run generate
 ```
 ## Build Css Framework
 ``` bash
-- SemanticUI
+# install SemanticUI
 $ cd semantic
 $ npm i
 $ gulp build
 
-- Tailwindcss
+# install Tailwindcss
 $ cd tailwindcss
 $ npm i
 $ npm run build
