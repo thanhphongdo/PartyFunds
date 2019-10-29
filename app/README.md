@@ -18,5 +18,15 @@ $ npm run start
 # generate static project
 $ npm run generate
 ```
+## Build Css Framework
+- SemanticUI
+cd semantic
+npm i
+gulp build
+
+- Tailwindcss
+cd tailwindcss
+npm i
+npm run build
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
