@@ -19,14 +19,16 @@ $ npm run start
 $ npm run generate
 ```
 ## Build Css Framework
+``` bash
 - SemanticUI
-cd semantic
-npm i
-gulp build
+$ cd semantic
+$ npm i
+$ gulp build
 
 - Tailwindcss
-cd tailwindcss
-npm i
-npm run build
+$ cd tailwindcss
+$ npm i
+$ npm run build
+```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
