@@ -1,4 +1,4 @@
-
+const webpack = require("webpack");
 module.exports = {
   mode: 'universal',
   /*
@@ -23,11 +23,18 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    '~/assets/semantic/dist/semantic.min.css',
+    '~/assets/tailwindcss/dist/tailwind.min.css',
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    // '~/plugins/jquery.js'
+    '~/plugins/i18n.js',
+    { src: '~/assets/jquery/dist/jquery.min.js', ssr: false },
+    { src: '~/assets/semantic/dist/semantic.min.js', ssr: false },
+    { src: '~/assets/web3/dist/web3.min.js', ssr: false },
   ],
   /*
   ** Nuxt.js dev-modules
@@ -41,7 +48,8 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    // 'jQuery'
   ],
   /*
   ** Axios module configuration
@@ -56,7 +64,22 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
+      return Object.assign({}, config, {
+        devtool: 'source-map'
+      });
+
+    },
+    render: {
+      static: {
+        maxAge: 30 * 24 * 60 * 60 * 1000
+      },
+      compressor: {
+        threshold: 0
+      }
+    },
+    router: {
+      middleware: ['i18n']
     }
   }
 }
