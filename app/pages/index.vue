@@ -2,15 +2,12 @@
   <div class="container">
     <div>
       <logo />
-      <h1 class="title">
-        partyfunds
-      </h1>
-      <h2 class="subtitle">
+      <h3 class="title">
+        partyfunds {{ $t('home.title') }}
+      </h3>
+      <h4 class="subtitle">
         My spectacular Nuxt.js project
-      </h2>
-      <div>
-        <img src="~/assets/logo.png"/>
-      </div>
+      </h4>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -56,7 +53,6 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 100px;
   color: #35495e;
   letter-spacing: 1px;
 }

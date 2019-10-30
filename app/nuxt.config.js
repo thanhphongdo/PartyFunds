@@ -31,6 +31,7 @@ module.exports = {
   */
   plugins: [
     // '~/plugins/jquery.js'
+    '~/plugins/i18n.js',
     { src: '~/assets/jquery/dist/jquery.min.js', ssr: false },
     { src: '~/assets/semantic/dist/semantic.min.js', ssr: false },
     { src: '~/assets/web3/dist/web3.min.js', ssr: false },
@@ -77,6 +78,8 @@ module.exports = {
         threshold: 0
       }
     },
-
+    router: {
+      middleware: ['i18n']
+    }
   }
 }
