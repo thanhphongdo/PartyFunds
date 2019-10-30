@@ -30,6 +30,10 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    // '~/plugins/jquery.js'
+    { src: '~/assets/jquery/dist/jquery.min.js', ssr: false },
+    { src: '~/assets/semantic/dist/semantic.min.js', ssr: false },
+    { src: '~/assets/web3/dist/web3.min.js', ssr: false },
   ],
   /*
   ** Nuxt.js dev-modules
@@ -43,7 +47,8 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    // 'jQuery'
   ],
   /*
   ** Axios module configuration
@@ -58,7 +63,20 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
-    }
+    extend(config, ctx) {
+      return Object.assign({}, config, {
+        devtool: 'source-map'
+      });
+
+    },
+    render: {
+      static: {
+        maxAge: 30 * 24 * 60 * 60 * 1000
+      },
+      compressor: {
+        threshold: 0
+      }
+    },
+
   }
 }
