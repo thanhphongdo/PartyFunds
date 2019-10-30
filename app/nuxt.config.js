@@ -1,4 +1,4 @@
-
+const webpack = require("webpack");
 module.exports = {
   mode: 'universal',
   /*
@@ -23,6 +23,8 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    '~/assets/semantic/dist/semantic.min.css',
+    '~/assets/tailwindcss/dist/tailwind.min.css',
   ],
   /*
   ** Plugins to load before mounting the App

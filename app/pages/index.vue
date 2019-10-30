@@ -8,6 +8,9 @@
       <h2 class="subtitle">
         My spectacular Nuxt.js project
       </h2>
+      <div>
+        <img src="~/assets/logo.png"/>
+      </div>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
