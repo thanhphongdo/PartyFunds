@@ -1,10 +1,12 @@
 import Vuex from 'vuex';
+const contractConfig = require('./contract.config.js');
 
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({
       locales: ['vn', 'fr'],
-      locale: 'vn'
+      locale: 'vn',
+      contractConfig: contractConfig
     }),
     mutations: {
       increment(state) {
