@@ -27,9 +27,11 @@ export default {
     let abi = this.contractConfig.contractABI;
     let contractAddress = this.contractConfig.contractAddress;
     let accAddress = "0x954Bb2030D74cc5846C6E742A7b61377B7bBA2a1";
-    let web3 = new Web3("http://localhost:8545");
+    // let web3 = new Web3("http://ropsten.infura.io/v3/414718f054ea41809a23841edffc6257");
+    let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8645"));
     let contract = new web3.eth.Contract(abi, contractAddress);
     window.contract = contract;
+    window.web3 = web3;
   }
 };
 </script>

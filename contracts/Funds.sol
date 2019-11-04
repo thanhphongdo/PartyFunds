@@ -12,7 +12,7 @@ contract Funds {
     
     struct Party{
         address creator;
-        address [] members;
+        address[] members;
         uint256 money;
         string message;
         string date;
@@ -88,7 +88,17 @@ contract Funds {
         return partyList;
     }
     
-    function newMember(string memory _name) public memberNotExists(msg.sender){
+    function test(uint256 val) public{
+        totalFunds = val;
+    }
+    
+    function newMember(string memory _name) public payable memberNotExists(msg.sender){
+        Member memory member = Member(msg.sender, _name, 0);
+        members[msg.sender] = member;
+        memberList.push(member);
+    }
+    
+    function newMember2(string memory _name) public memberNotExists(msg.sender){
         Member memory member = Member(msg.sender, _name, 0);
         members[msg.sender] = member;
         memberList.push(member);
