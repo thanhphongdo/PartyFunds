@@ -94,5 +94,8 @@ module.exports = {
     'unicorn/error-message': 'off',
     'no-global-assign': 'off',
     'no-extend-native': 'off',
+    'no-return-await': 'off',
+    'spaced-comment': 'off',
+    'brace-style': 'off',
   }
 }

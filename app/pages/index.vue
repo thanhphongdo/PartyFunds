@@ -13,25 +13,21 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
+// import EtherService from '../services/ether.service';
 import Logo from "~/components/Logo.vue";
+// const contractConfig = require('../store/contract.config.js');
 
 export default {
   components: {
     Logo
   },
   computed: mapState(["contractConfig"]),
+  methods: {
+    ...mapMutations(["initContract"])
+  },
   mounted() {
-    console.log(this.contractConfig);
-    console.log("mounted.........");
-    let abi = this.contractConfig.contractABI;
-    let contractAddress = this.contractConfig.contractAddress;
-    let accAddress = "0x954Bb2030D74cc5846C6E742A7b61377B7bBA2a1";
-    // let web3 = new Web3("http://ropsten.infura.io/v3/414718f054ea41809a23841edffc6257");
-    let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8645"));
-    let contract = new web3.eth.Contract(abi, contractAddress);
-    window.contract = contract;
-    window.web3 = web3;
+    window.test = this;
   }
 };
 </script>

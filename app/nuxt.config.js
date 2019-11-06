@@ -34,7 +34,9 @@ module.exports = {
     '~/plugins/i18n.js',
     { src: '~/assets/jquery/dist/jquery.min.js', ssr: false },
     { src: '~/assets/semantic/dist/semantic.min.js', ssr: false },
-    { src: '~/assets/web3/dist/web3.min.js', ssr: false },
+    { src: '~/assets/ethers/dist/ethers-v4.min.js', ssr: false },
+    { src: '~/assets/crypto/dist/crypto.min.js', ssr: false },
+    // { src: '~/assets/web3/dist/web3.min.js', ssr: false },
   ],
   /*
   ** Nuxt.js dev-modules
@@ -48,7 +50,7 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
     // 'jQuery'
   ],
   /*
