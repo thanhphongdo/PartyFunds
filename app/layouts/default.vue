@@ -1,7 +1,7 @@
 <template>
   <div class="tw-flex tw-flex-col tw-h-full">
     <ActionBar></ActionBar>
-    <div class="tw-flex-1 tw-p-4">
+    <div class="tw-flex-1 tw-p-4 tw-overflow-auto">
       <nuxt />
     </div>
     <TabBar></TabBar>

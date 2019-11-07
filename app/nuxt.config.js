@@ -84,5 +84,9 @@ module.exports = {
     router: {
       middleware: ['i18n']
     }
+  },
+  server: {
+    port: 8000, // default: 3000
+    host: '192.168.1.184' // default: localhost
   }
 }
