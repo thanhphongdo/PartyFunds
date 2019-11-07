@@ -1,55 +1,30 @@
 <template>
-  <div>
-    <nuxt />
+  <div class="tw-flex tw-flex-col tw-h-full">
+    <ActionBar></ActionBar>
+    <div class="tw-flex-1 tw-p-4">
+      <nuxt />
+    </div>
+    <TabBar></TabBar>
   </div>
 </template>
+<script>
+import { mapState, mapMutations } from "vuex";
+import ActionBar from "~/components/ActionBar.vue";
+import Logo from "~/components/Logo.vue";
+import TabBar from "~/components/TabBar.vue";
 
-<style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
-}
-</style>
+export default {
+  components: {
+    Logo,
+    ActionBar,
+    TabBar
+  },
+  computed: mapState(["contractConfig"]),
+  methods: {
+    ...mapMutations(["initContract"])
+  },
+  mounted() {
+    window.test = this;
+  }
+};
+</script>

@@ -25,6 +25,7 @@ module.exports = {
   css: [
     '~/assets/semantic/dist/semantic.min.css',
     '~/assets/tailwindcss/dist/tailwind.min.css',
+    '~/assets/main/main.css',
   ],
   /*
   ** Plugins to load before mounting the App
