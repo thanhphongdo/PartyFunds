@@ -68,9 +68,7 @@
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
-// import EtherService from '../services/ether.service';
 import Logo from "~/components/Logo.vue";
-// const contractConfig = require('../store/contract.config.js');
 
 export default {
   components: {
@@ -78,11 +76,13 @@ export default {
   },
   computed: mapState(["contractConfig"]),
   methods: {
-    ...mapMutations(["initContract"])
+    ...mapMutations(["initContract", "setPage"])
   },
   mounted() {
     $(".member").dropdown({});
     $(".members").dropdown({});
+    this.setPage("transaction");
+    console.log('transaction');
   }
 };
 </script>

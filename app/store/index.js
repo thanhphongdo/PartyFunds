@@ -7,7 +7,12 @@ const createStore = () => {
     state: () => ({
       locales: ['vn', 'fr'],
       locale: 'vn',
-      contractConfig: contractConfig
+      contractConfig: contractConfig,
+      page: {
+        transaction: false,
+        history: false,
+        account: false
+      }
     }),
     mutations: {
       initContract(state, privateKey) {
@@ -18,6 +23,13 @@ const createStore = () => {
         if (state.locales.includes(locale)) {
           state.locale = locale
         }
+      },
+      setPage(state, page) {
+        let keys = Object.keys(state.page);
+        keys.forEach(key => {
+          state.page[key] = false;
+        });
+        state.page[page] = true;
       }
     },
     modules: {

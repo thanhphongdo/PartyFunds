@@ -1,10 +1,14 @@
 <template>
-  <div class="tw-flex tw-flex-col tw-h-full">
-    <ActionBar></ActionBar>
-    <div class="tw-flex-1 tw-p-4 tw-overflow-auto">
-      <nuxt />
+  <div class="tw-h-full">
+    <ActionBar class="tw-fixed tw-w-full tw-pin-t tw-z-10"></ActionBar>
+    <div class="tw-pt-8 tw-pb-8">
+      <div class="tw-pt-2 tw-pb-4">
+        <div class="tw-h-full tw-p-4">
+          <nuxt />
+        </div>
+      </div>
     </div>
-    <TabBar></TabBar>
+    <TabBar class="tw-fixed tw-w-full tw-pin-b tw-z-10"></TabBar>
   </div>
 </template>
 <script>
