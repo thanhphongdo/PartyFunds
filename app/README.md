@@ -22,7 +22,6 @@ $ npm run generate
 ``` bash
 # install SemanticUI
 $ cd semantic
-$ npm i
 $ gulp build
 
 # install Tailwindcss
