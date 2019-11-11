@@ -12,6 +12,28 @@ const createStore = () => {
         transaction: false,
         history: false,
         account: false
+      },
+      data: {
+        members: [
+          {
+            value: 1,
+            name: 'Phong Do'
+          },
+          {
+            value: 2,
+            name: 'Hoang Ng'
+          },
+          {
+            value: 3,
+            name: 'Tai Bui'
+          }
+        ]
+      },
+      model: {
+        transaction: {
+          member: null,
+          members: null
+        }
       }
     }),
     mutations: {

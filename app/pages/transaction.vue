@@ -8,11 +8,13 @@
           </div>
           <div class="field">
             <label>To</label>
-            <select class="ui dropdown member">
-              <option value>Member</option>
-              <option value="1">Nguyen Van A</option>
-              <option value="0">Tran Van B</option>
-            </select>
+            <DropDown
+              ref="dropdownMember"
+              v-model="model.transaction.member"
+              class="fluid selection"
+              :values="data.members"
+              placeholder="Member"
+            ></DropDown>
           </div>
           <div class="field">
             <label>Value</label>
@@ -30,31 +32,13 @@
           </div>
           <div class="field">
             <label>Member</label>
-            <div class="ui fluid multiple search selection dropdown members">
-              <input name="tags" type="hidden" />
-              <i class="dropdown icon"></i>
-              <div class="default text">Skills</div>
-              <div class="menu">
-                <div class="item" data-value="angular">Angular</div>
-                <div class="item" data-value="css">CSS</div>
-                <div class="item" data-value="design">Graphic Design</div>
-                <div class="item" data-value="ember">Ember</div>
-                <div class="item" data-value="html">HTML</div>
-                <div class="item" data-value="ia">Information Architecture</div>
-                <div class="item" data-value="javascript">Javascript</div>
-                <div class="item" data-value="mech">Mechanical Engineering</div>
-                <div class="item" data-value="meteor">Meteor</div>
-                <div class="item" data-value="node">NodeJS</div>
-                <div class="item" data-value="plumbing">Plumbing</div>
-                <div class="item" data-value="python">Python</div>
-                <div class="item" data-value="rails">Rails</div>
-                <div class="item" data-value="react">React</div>
-                <div class="item" data-value="repair">Kitchen Repair</div>
-                <div class="item" data-value="ruby">Ruby</div>
-                <div class="item" data-value="ui">UI Design</div>
-                <div class="item" data-value="ux">User Experience</div>
-              </div>
-            </div>
+            <DropDown
+              ref="dropdownMember"
+              v-model="model.transaction.members"
+              class="fluid selection multiple"
+              :values="data.members"
+              placeholder="Member"
+            ></DropDown>
           </div>
           <div class="field">
             <label>Value</label>
@@ -68,21 +52,29 @@
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
-import Logo from "~/components/Logo.vue";
+import DropDown from "~/components/shared/DropDown.vue";
 
 export default {
   components: {
-    Logo
+    DropDown
   },
-  computed: mapState(["contractConfig"]),
+  data() {
+    return {
+      members: null
+    };
+  },
+  computed: mapState(["contractConfig", "data", "model"]),
   methods: {
     ...mapMutations(["initContract", "setPage"])
   },
   mounted() {
-    $(".member").dropdown({});
-    $(".members").dropdown({});
+    // $(".member").dropdown({});
+    // $(".members").dropdown({});
     this.setPage("transaction");
-    console.log('transaction');
+    // this.$refs.dropdownMember.callFunction(
+    //   "set selected",
+    //   this.model.transaction.members
+    // );
   }
 };
 </script>
