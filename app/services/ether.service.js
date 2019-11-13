@@ -39,4 +39,8 @@ export default class EtherService {
     async test(val) {
         return await this.contract.test();
     }
+
+    call(funcName, params) {
+        return this.contract[funcName](...params);
+    }
 }

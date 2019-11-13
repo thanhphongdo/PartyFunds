@@ -24,10 +24,13 @@ export default {
   },
   computed: mapState(["contractConfig"]),
   methods: {
-    ...mapMutations(["initContract"])
+    ...mapMutations(["initContract", "callContract"])
   },
   mounted() {
-    window.test = this;
+    window.test222 = this;
+    console.log(this);
+    // window.window.test.callContract
+    console.log();
   }
 };
 </script>

@@ -1,97 +1,17 @@
 module.exports = {
     url: 'http://localhost:8545',
-    contractAddress: '0x589444E196400e48C1F66aaa1bd83eD62A3B5963',
+    contractAddress: '0x3403E715Bdc05646f7566bcC51fEA0b8A7ef3d68',
     contractABI: [
         {
             "constant": false,
             "inputs": [
                 {
-                    "internalType": "address[]",
-                    "name": "_members",
-                    "type": "address[]"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "_money",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_message",
-                    "type": "string"
-                },
-                {
-                    "internalType": "string",
-                    "name": "_date",
-                    "type": "string"
-                }
-            ],
-            "name": "createParty",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_name",
-                    "type": "string"
-                }
-            ],
-            "name": "newMember",
-            "outputs": [],
-            "payable": true,
-            "stateMutability": "payable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_name",
-                    "type": "string"
-                }
-            ],
-            "name": "newMember2",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "index",
-                    "type": "uint256"
-                }
-            ],
-            "name": "payForParty",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
                     "internalType": "address",
-                    "name": "_member",
+                    "name": "addr",
                     "type": "address"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "_money",
-                    "type": "uint256"
                 }
             ],
-            "name": "payIn",
+            "name": "setBaseFundAddress",
             "outputs": [],
             "payable": false,
             "stateMutability": "nonpayable",
@@ -106,27 +26,7 @@ module.exports = {
                     "type": "uint256"
                 }
             ],
-            "name": "test",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "_member",
-                    "type": "address"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "_money",
-                    "type": "uint256"
-                }
-            ],
-            "name": "transferMoney",
+            "name": "setTestCount",
             "outputs": [],
             "payable": false,
             "stateMutability": "nonpayable",
@@ -141,29 +41,12 @@ module.exports = {
         {
             "constant": true,
             "inputs": [],
-            "name": "getFundHost",
+            "name": "getBaseFunds",
             "outputs": [
                 {
-                    "components": [
-                        {
-                            "internalType": "address",
-                            "name": "id",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "string",
-                            "name": "name",
-                            "type": "string"
-                        },
-                        {
-                            "internalType": "uint256",
-                            "name": "money",
-                            "type": "uint256"
-                        }
-                    ],
-                    "internalType": "struct Funds.Member",
+                    "internalType": "contract BaseFunds",
                     "name": "",
-                    "type": "tuple"
+                    "type": "address"
                 }
             ],
             "payable": false,
@@ -173,86 +56,7 @@ module.exports = {
         {
             "constant": true,
             "inputs": [],
-            "name": "getMemberList",
-            "outputs": [
-                {
-                    "components": [
-                        {
-                            "internalType": "address",
-                            "name": "id",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "string",
-                            "name": "name",
-                            "type": "string"
-                        },
-                        {
-                            "internalType": "uint256",
-                            "name": "money",
-                            "type": "uint256"
-                        }
-                    ],
-                    "internalType": "struct Funds.Member[]",
-                    "name": "",
-                    "type": "tuple[]"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getPartyList",
-            "outputs": [
-                {
-                    "components": [
-                        {
-                            "internalType": "address",
-                            "name": "creator",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "address[]",
-                            "name": "members",
-                            "type": "address[]"
-                        },
-                        {
-                            "internalType": "uint256",
-                            "name": "money",
-                            "type": "uint256"
-                        },
-                        {
-                            "internalType": "string",
-                            "name": "message",
-                            "type": "string"
-                        },
-                        {
-                            "internalType": "string",
-                            "name": "date",
-                            "type": "string"
-                        },
-                        {
-                            "internalType": "bool",
-                            "name": "paySuccess",
-                            "type": "bool"
-                        }
-                    ],
-                    "internalType": "struct Funds.Party[]",
-                    "name": "",
-                    "type": "tuple[]"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getTotalFund",
+            "name": "getTestCount",
             "outputs": [
                 {
                     "internalType": "uint256",

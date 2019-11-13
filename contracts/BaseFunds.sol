@@ -5,6 +5,7 @@ contract BaseFunds {
     uint256 totalFunds = 0;
     uint countMember = 0;
     uint countParty = 0;
+    uint testCount = 0;
     struct Member{
         address id;
         string name;
@@ -38,6 +39,9 @@ contract BaseFunds {
     function getPartyList() public view returns (Party[] memory) {
         return partyList;
     }
+    function getTestCount() public view returns (uint) {
+        return testCount;
+    }
     function addMember(Member memory member) public{
         memberList.push(member);
         members[msg.sender] = member;
@@ -47,5 +51,9 @@ contract BaseFunds {
         partyList.push(party);
         parties[countParty] = party;
         countParty++;
+    }
+
+    function setTestCount(uint val) public {
+        testCount += val;
     }
 }

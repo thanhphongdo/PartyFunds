@@ -40,6 +40,18 @@ const createStore = () => {
       initContract(state, privateKey) {
         contract.setPrivateKey(privateKey);
         contract.init();
+        window.contract = contract;
+      },
+      callContract(state, { funcName, params, callback, error }) {
+        try {
+          contract.call(funcName, params).then(data => {
+            callback(data);
+          }).catch(err => {
+            error(err);
+          });
+        } catch (e) {
+          error(e);
+        }
       },
       SET_LANG(state, locale) {
         if (state.locales.includes(locale)) {

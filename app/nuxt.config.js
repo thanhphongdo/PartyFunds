@@ -87,7 +87,7 @@ module.exports = {
   },
   server: {
     port: 8000, // default: 3000
-    host: '192.168.135.116' // default: localhost
-    // host: '127.0.0.1' // default: localhost
+    // host: '192.168.135.116' // default: localhost
+    host: '127.0.0.1' // default: localhost
   }
 }
