@@ -5,25 +5,6 @@ contract Funds is BaseFunds {
     address owner;
     address baseFundsAdrr;
     BaseFunds baseFunds;
-    // uint256 totalFunds = 0;
-    // uint countParty = 0;
-    // struct Member{
-    //     address id;
-    //     string name;
-    //     uint256 money;
-    // }
-    // struct Party{
-    //     address creator;
-    //     address[] members;
-    //     uint256 money;
-    //     string message;
-    //     string date;
-    //     bool paySuccess;
-    // }
-    // mapping(address=>Member) members;
-    // Member fundHost;
-    // Member[] memberList;
-    // Party[] partyList;
     modifier onlyOwner() { // Modifier
         require(
             msg.sender == owner,
@@ -31,27 +12,27 @@ contract Funds is BaseFunds {
         );
         _;
     }
-    // modifier onlyMember() { // Modifier
-    //     require(
-    //         msg.sender != owner,
-    //         "Only Owner can call this."
-    //     );
-    //     _;
-    // }
-    // modifier memberExists(address member) { // Modifier
-    //     bool checkExists = false;
-    //     for(uint i = 0; i < memberList.length; i++) {
-    //         if (memberList[i].id == member) {
-    //             checkExists = true;
-    //             break;
-    //         }
-    //     }
-    //     require(
-    //         checkExists,
-    //         "Member not exists"
-    //     );
-    //     _;
-    // }
+    modifier onlyMember() { // Modifier
+        require(
+            msg.sender != owner,
+            "Only Owner can call this."
+        );
+        _;
+    }
+    modifier memberExists(address member) { // Modifier
+        bool checkExists = false;
+        for(uint i = 0; i < baseFunds.memberList.length; i++) {
+            if (baseFunds.memberList[i].id == member) {
+                checkExists = true;
+                break;
+            }
+        }
+        require(
+            checkExists,
+            "Member not exists"
+        );
+        _;
+    }
     // modifier memberNotExists(address member) { // Modifier
     //     bool checkExists = false;
     //     for(uint i = 0; i < memberList.length; i++) {
