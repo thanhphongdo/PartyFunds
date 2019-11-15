@@ -1,6 +1,6 @@
 import Vuex from 'vuex';
 import EtherService from '../services/ether.service';
-const contractConfig = require('./contract.config.js');
+const contractConfig = require('./contract.config.json');
 const contract = new EtherService(contractConfig.url, contractConfig.contractAddress, contractConfig.contractABI);
 const createStore = () => {
   return new Vuex.Store({

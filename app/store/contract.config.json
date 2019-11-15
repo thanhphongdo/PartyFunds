@@ -1,7 +1,7 @@
-module.exports = {
-    url: 'http://localhost:8545',
-    contractAddress: '0x49C75aC9bc9DdEb8393654b2F9f94C1c729FfdFf',
-    contractABI: [
+{
+    "url": "http://localhost:8545",
+    "contractAddress": "0x07daa168D3cd1Cf2701f117032b96c7D5F062abF",
+    "contractABI": [
         {
             "constant": false,
             "inputs": [
@@ -21,46 +21,24 @@ module.exports = {
             "constant": false,
             "inputs": [
                 {
-                    "components": [
-                        {
-                            "internalType": "address",
-                            "name": "creator",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "address[]",
-                            "name": "members",
-                            "type": "address[]"
-                        },
-                        {
-                            "internalType": "uint256",
-                            "name": "money",
-                            "type": "uint256"
-                        },
-                        {
-                            "internalType": "string",
-                            "name": "message",
-                            "type": "string"
-                        },
-                        {
-                            "internalType": "string",
-                            "name": "date",
-                            "type": "string"
-                        },
-                        {
-                            "internalType": "bool",
-                            "name": "paySuccess",
-                            "type": "bool"
-                        },
-                        {
-                            "internalType": "bool",
-                            "name": "isValue",
-                            "type": "bool"
-                        }
-                    ],
-                    "internalType": "struct BaseFunds.Party",
-                    "name": "party",
-                    "type": "tuple"
+                    "internalType": "address[]",
+                    "name": "_members",
+                    "type": "address[]"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_money",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_message",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_createdDate",
+                    "type": "string"
                 }
             ],
             "name": "addParty",
@@ -115,10 +93,112 @@ module.exports = {
             "type": "function"
         },
         {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_id",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "address[]",
+                    "name": "_members",
+                    "type": "address[]"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_money",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_message",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_createdDate",
+                    "type": "string"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "_requestReject",
+                    "type": "bool"
+                }
+            ],
+            "name": "updatePartyByCreator",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_id",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "_paySuccess",
+                    "type": "bool"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "_reject",
+                    "type": "bool"
+                }
+            ],
+            "name": "updatePartyByOwner",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
             "inputs": [],
             "payable": false,
             "stateMutability": "nonpayable",
             "type": "constructor"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getAllMember",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "address",
+                            "name": "id",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "name",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "money",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "isValue",
+                            "type": "bool"
+                        }
+                    ],
+                    "internalType": "struct BaseFunds.Member[]",
+                    "name": "",
+                    "type": "tuple[]"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
         },
         {
             "constant": true,
@@ -250,7 +330,18 @@ module.exports = {
         },
         {
             "constant": true,
-            "inputs": [],
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_page",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_perPage",
+                    "type": "uint256"
+                }
+            ],
             "name": "getPartyList",
             "outputs": [
                 {
@@ -277,12 +368,22 @@ module.exports = {
                         },
                         {
                             "internalType": "string",
-                            "name": "date",
+                            "name": "createdDate",
                             "type": "string"
                         },
                         {
                             "internalType": "bool",
                             "name": "paySuccess",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "reject",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "requestReject",
                             "type": "bool"
                         },
                         {

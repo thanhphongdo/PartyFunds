@@ -94,6 +94,9 @@ contract BaseFunds {
         }
         return _partyList;
     }
+    function getParty(uint256 _id) public view returns (Party memory) {
+        return parties[_id];
+    }
     function getTestCount() public view returns (uint) {
         return testCount;
     }
@@ -102,6 +105,17 @@ contract BaseFunds {
         memberList.push(member);
         members[msg.sender] = member;
         countMember++;
+    }
+    function updateMember(address _addr, string memory _name, uint256 _money) public {
+        Member memory _member = members[_addr];
+        _member.name = _name;
+        _member.money = _money;
+        members[_addr] = _member;
+    }
+    function updateMemberMoney(address _addr, uint256 _money) public {
+        Member memory _member = members[_addr];
+        _member.money += _money;
+        updateMember(_addr, _member.name, _member.money);
     }
     function addParty(address[] memory _members, uint256  _money, string memory  _message, string memory  _createdDate) public{
         Party memory _party = Party(msg.sender, _members, _money, _message, _createdDate, false, false, false, true);
@@ -132,5 +146,8 @@ contract BaseFunds {
 
     function setTestCount(uint val) public {
         testCount += val;
+    }
+    function getAllMember() public view returns (Member[] memory) {
+        return memberList;
     }
 }
