@@ -44,11 +44,19 @@ const createStore = () => {
       },
       callContract(state, { funcName, params, callback, error }) {
         try {
-          contract.call(funcName, params).then(data => {
-            callback(data);
-          }).catch(err => {
-            error(err);
-          });
+          if (params) {
+            contract.contract[funcName](...params).then(data => {
+              callback(data);
+            }).catch(err => {
+              error(err);
+            });
+          } else {
+            contract.contract[funcName]().then(data => {
+              callback(data);
+            }).catch(err => {
+              error(err);
+            });
+          }
         } catch (e) {
           error(e);
         }

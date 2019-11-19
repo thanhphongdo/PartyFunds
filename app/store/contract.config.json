@@ -1,10 +1,30 @@
 {
     "url": "http://localhost:8545",
-    "contractAddress": "0x07daa168D3cd1Cf2701f117032b96c7D5F062abF",
+    "contractAddress": "0xF929A78ee3Ee11d5019fd1cf3D16DdbB2f4C3B94",
     "contractABI": [
         {
             "constant": false,
             "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "acceptParty",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_sender",
+                    "type": "address"
+                },
                 {
                     "internalType": "string",
                     "name": "_name",
@@ -20,6 +40,11 @@
         {
             "constant": false,
             "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_sender",
+                    "type": "address"
+                },
                 {
                     "internalType": "address[]",
                     "name": "_members",
@@ -66,6 +91,66 @@
             "constant": false,
             "inputs": [
                 {
+                    "internalType": "address[]",
+                    "name": "_members",
+                    "type": "address[]"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_money",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_message",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_createdDate",
+                    "type": "string"
+                }
+            ],
+            "name": "newParty",
+            "outputs": [],
+            "payable": true,
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "rejectParty",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "requestRejectParty",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
                     "internalType": "address",
                     "name": "addr",
                     "type": "address"
@@ -95,6 +180,56 @@
         {
             "constant": false,
             "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_addr",
+                    "type": "address"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_money",
+                    "type": "uint256"
+                }
+            ],
+            "name": "updateMember",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_addr",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_money",
+                    "type": "uint256"
+                }
+            ],
+            "name": "updateMemberMoney",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_sender",
+                    "type": "address"
+                },
                 {
                     "internalType": "uint256",
                     "name": "_id",
@@ -135,6 +270,11 @@
         {
             "constant": false,
             "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_sender",
+                    "type": "address"
+                },
                 {
                     "internalType": "uint256",
                     "name": "_id",
@@ -322,6 +462,74 @@
                     "internalType": "struct BaseFunds.Member[]",
                     "name": "",
                     "type": "tuple[]"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getParty",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "address",
+                            "name": "creator",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "address[]",
+                            "name": "members",
+                            "type": "address[]"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "money",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "message",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "createdDate",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "paySuccess",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "reject",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "requestReject",
+                            "type": "bool"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "isValue",
+                            "type": "bool"
+                        }
+                    ],
+                    "internalType": "struct BaseFunds.Party",
+                    "name": "",
+                    "type": "tuple"
                 }
             ],
             "payable": false,
