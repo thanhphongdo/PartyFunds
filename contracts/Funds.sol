@@ -78,11 +78,13 @@ contract Funds is BaseFunds {
         baseFunds.updatePartyByOwner(msg.sender, _id, false, true);
     }
     function acceptParty(uint256 _id) public {
-        baseFunds.updatePartyByOwner(msg.sender, _id, true, false);
         Party memory _party = baseFunds.getParty(_id);
-        uint256 _moneyShared = _party.money / _party.members.length;
-        for(uint256 i = 0; i < _party.members.length; i++){
-            baseFunds.updateMemberMoney(_party.members[i], -int256(_moneyShared));
+        if(!_party.paySuccess){
+            baseFunds.updatePartyByOwner(msg.sender, _id, true, false);
+            uint256 _moneyShared = _party.money / _party.members.length;
+            for(uint256 i = 0; i < _party.members.length; i++){
+                baseFunds.updateMemberMoney(_party.members[i], -int256(_moneyShared));
+            }
         }
     }
     function getPartySharedCost(uint256 _id) public view returns (uint256) {

@@ -1,6 +1,6 @@
 {
     "url": "http://localhost:8545",
-    "contractAddress": "0x43C016353f423dC55abB43c76ff78640c065399A",
+    "contractAddress": "0x19C6DDB4fE325700CA12AB7c40b90154aFD81E58",
     "contractABI": [
         {
             "constant": false,
