@@ -34,11 +34,13 @@ contract Funds is BaseFunds {
     //     );
     //     _;
     // }
+    
     constructor() public{
         owner = msg.sender;
         // fundHost = Member(msg.sender, "HOST", 0);
     }
-    function getTotalFund() public view returns (uint256) {
+    
+    function getTotalFund() public view returns (int256) {
         return baseFunds.getTotalFund();
     }
     function getFundHost() public view returns (Member memory) {
@@ -80,8 +82,13 @@ contract Funds is BaseFunds {
         Party memory _party = baseFunds.getParty(_id);
         uint256 _moneyShared = _party.money / _party.members.length;
         for(uint256 i = 0; i < _party.members.length; i++){
-            baseFunds.updateMemberMoney(_party.members[i], -_moneyShared);
+            baseFunds.updateMemberMoney(_party.members[i], -int256(_moneyShared));
         }
+    }
+    function getPartySharedCost(uint256 _id) public view returns (uint256) {
+        Party memory _party = baseFunds.getParty(_id);
+        uint256 _moneyShared = _party.money / _party.members.length;
+        return _moneyShared;
     }
     function setTestCount(uint val) public {
         baseFunds.setTestCount(val);

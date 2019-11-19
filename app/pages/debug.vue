@@ -11,7 +11,12 @@
       </div>
       <div class="ui submit button" @click="initAllContract">Init contract</div>
     </div>
-    <Accordion class="tw-mt-4" v-for="(item, index) in accounts" :key="index" ref="accountRow">
+    <Accordion
+      class="tw-mt-4 tw-p-1 tw-bg-grey-lighter"
+      v-for="(item, index) in accounts"
+      :key="index"
+      ref="accountRow"
+    >
       <div class="title" :class="{'tw-bg-green-light': item.active}">
         <div class="tw-flex">
           <div class>
@@ -37,13 +42,26 @@
       </div>
       <div class="content">
         <div class="tw-flex tw-mb-2" v-for="(mItem, mIndex) in item.methods" :key="mIndex">
-          <div class="ui mini input tw-w-1/3 tw-mr-1">
+          <div class="ui mini input tw-w-1/3 tw-mr-1 tw-self-start">
             <input type="text" placeholder="function" v-model="mItem.funcName" />
           </div>
-          <div class="ui mini input tw-flex-1 tw-mr-1">
-            <input type="text" placeholder="params" v-model="mItem.params" />
+          <!-- <div class="ui mini input tw-flex-1 tw-mr-1">
+            <textarea class="tw-w-full tw-max-w-full" type="text" placeholder="params" v-model="mItem.params"></textarea>
+          </div>-->
+          <div class="ui form tw-flex-1 tw-mr-1">
+            <div class="field">
+              <textarea
+                style="height: auto; min-height: auto; padding: 7px 11px;font-size:.78571429em"
+                rows="1"
+                placeholder="params"
+                v-model="mItem.params"
+              ></textarea>
+            </div>
           </div>
-          <button class="mini ui icon inverted blue button" @click="executeMethod(mItem, index)">
+          <button
+            class="mini ui icon inverted blue button tw-self-start"
+            @click="executeMethod(mItem, index)"
+          >
             <i class="paper plane outline icon"></i>
           </button>
         </div>
@@ -79,6 +97,7 @@ export default {
     ...mapMutations(["initContract", "callContract"]),
     initAllContract() {
       let self = this;
+      self.accounts.splice(0);
       window.localStorage["address"] = self.formModel.address;
       window.localStorage["privateKey"] = self.formModel.privateKey;
       let listAddress = this.formModel.address.split("\n");
@@ -142,6 +161,15 @@ export default {
       this.saveAccounts();
       let funcName = methodData.funcName;
       let params = methodData.params ? methodData.params.split("|") : null;
+      if (!methodData.funcName) return;
+      if (params) {
+        params = params.map(item => {
+          if (item && item[0] == "[" && item[item.length - 1] == "]") {
+            return JSON.parse(item);
+          }
+          return item;
+        });
+      }
       this.callContract({
         funcName: funcName,
         params: params,

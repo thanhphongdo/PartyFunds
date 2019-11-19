@@ -1,6 +1,6 @@
 {
     "url": "http://localhost:8545",
-    "contractAddress": "0xF929A78ee3Ee11d5019fd1cf3D16DdbB2f4C3B94",
+    "contractAddress": "0x43C016353f423dC55abB43c76ff78640c065399A",
     "contractABI": [
         {
             "constant": false,
@@ -191,9 +191,9 @@
                     "type": "string"
                 },
                 {
-                    "internalType": "uint256",
+                    "internalType": "int256",
                     "name": "_money",
-                    "type": "uint256"
+                    "type": "int256"
                 }
             ],
             "name": "updateMember",
@@ -211,9 +211,9 @@
                     "type": "address"
                 },
                 {
-                    "internalType": "uint256",
+                    "internalType": "int256",
                     "name": "_money",
-                    "type": "uint256"
+                    "type": "int256"
                 }
             ],
             "name": "updateMemberMoney",
@@ -321,8 +321,13 @@
                             "type": "string"
                         },
                         {
-                            "internalType": "uint256",
+                            "internalType": "int256",
                             "name": "money",
+                            "type": "int256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "index",
                             "type": "uint256"
                         },
                         {
@@ -358,8 +363,13 @@
                             "type": "string"
                         },
                         {
-                            "internalType": "uint256",
+                            "internalType": "int256",
                             "name": "money",
+                            "type": "int256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "index",
                             "type": "uint256"
                         },
                         {
@@ -401,8 +411,13 @@
                             "type": "string"
                         },
                         {
-                            "internalType": "uint256",
+                            "internalType": "int256",
                             "name": "money",
+                            "type": "int256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "index",
                             "type": "uint256"
                         },
                         {
@@ -449,8 +464,13 @@
                             "type": "string"
                         },
                         {
-                            "internalType": "uint256",
+                            "internalType": "int256",
                             "name": "money",
+                            "type": "int256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "index",
                             "type": "uint256"
                         },
                         {
@@ -611,6 +631,27 @@
         },
         {
             "constant": true,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getPartySharedCost",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
             "inputs": [],
             "name": "getTestCount",
             "outputs": [
@@ -630,9 +671,9 @@
             "name": "getTotalFund",
             "outputs": [
                 {
-                    "internalType": "uint256",
+                    "internalType": "int256",
                     "name": "",
-                    "type": "uint256"
+                    "type": "int256"
                 }
             ],
             "payable": false,

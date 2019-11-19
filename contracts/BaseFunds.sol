@@ -2,14 +2,15 @@ pragma solidity >=0.4.22 <0.6.0;
 pragma experimental ABIEncoderV2;
 contract BaseFunds {
     address owner;
-    uint256 totalFunds = 0;
+    int256 totalFunds = 0;
     uint countMember = 0;
     uint countParty = 0;
     uint testCount = 0;
     struct Member{
         address id;
         string name;
-        uint256 money;
+        int256 money;
+        uint256 index;
         bool isValue;
     }
     struct Party{
@@ -67,7 +68,7 @@ contract BaseFunds {
         _;
     }
 
-    function getTotalFund() public view returns (uint256) {
+    function getTotalFund() public view returns (int256) {
         return totalFunds;
     }
     function getFundHost() public view returns (Member memory) {
@@ -101,21 +102,19 @@ contract BaseFunds {
         return testCount;
     }
     function addMember(address _sender, string memory _name) public memberNotExists(_sender){
-        Member memory member = Member(_sender, _name, 0, true);
+        Member memory member = Member(_sender, _name, 0, countMember, true);
         memberList.push(member);
         members[_sender] = member;
         countMember++;
     }
-    function updateMember(address _addr, string memory _name, uint256 _money) public {
-        Member memory _member = members[_addr];
-        _member.name = _name;
-        _member.money = _money;
-        members[_addr] = _member;
+    function updateMember(address _addr, string memory _name, int256 _money) public {
+        members[_addr].name = _name;
+        members[_addr].money = _money;
+        memberList[members[_addr].index] = members[_addr];
     }
-    function updateMemberMoney(address _addr, uint256 _money) public {
-        Member memory _member = members[_addr];
-        _member.money += _money;
-        updateMember(_addr, _member.name, _member.money);
+    function updateMemberMoney(address _addr, int256 _money) public {
+        members[_addr].money += _money;
+        memberList[members[_addr].index] = members[_addr];
     }
     function addParty(address _sender, address[] memory _members, uint256  _money, string memory  _message, string memory  _createdDate) public{
         Party memory _party = Party(_sender, _members, _money, _message, _createdDate, false, false, false, true);
