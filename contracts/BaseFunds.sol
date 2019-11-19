@@ -100,10 +100,10 @@ contract BaseFunds {
     function getTestCount() public view returns (uint) {
         return testCount;
     }
-    function addMember(string memory _name) public memberNotExists(msg.sender){
-        Member memory member = Member(msg.sender, _name, 0, true);
+    function addMember(address _sender, string memory _name) public memberNotExists(_sender){
+        Member memory member = Member(_sender, _name, 0, true);
         memberList.push(member);
-        members[msg.sender] = member;
+        members[_sender] = member;
         countMember++;
     }
     function updateMember(address _addr, string memory _name, uint256 _money) public {
@@ -117,15 +117,15 @@ contract BaseFunds {
         _member.money += _money;
         updateMember(_addr, _member.name, _member.money);
     }
-    function addParty(address[] memory _members, uint256  _money, string memory  _message, string memory  _createdDate) public{
-        Party memory _party = Party(msg.sender, _members, _money, _message, _createdDate, false, false, false, true);
+    function addParty(address _sender, address[] memory _members, uint256  _money, string memory  _message, string memory  _createdDate) public{
+        Party memory _party = Party(_sender, _members, _money, _message, _createdDate, false, false, false, true);
         partyList.push(_party);
         parties[countParty] = _party;
         countParty++;
     }
     function updatePartyByCreator(
-        uint256 _id, address[] memory _members, uint256 _money, string memory _message, string memory _createdDate, bool _requestReject
-    ) public onlyCreatorCanUpdateParty(_id, msg.sender){
+        address _sender, uint256 _id, address[] memory _members, uint256 _money, string memory _message, string memory _createdDate, bool _requestReject
+    ) public onlyCreatorCanUpdateParty(_id, _sender){
         Party memory _party = parties[_id];
         _party.members = _members;
         _party.money = _money;
@@ -135,8 +135,8 @@ contract BaseFunds {
         partyList[_id] = _party;
         parties[_id] = _party;
     }
-    function updatePartyByOwner(uint256 _id, bool _paySuccess, bool _reject)
-    public onlyOwnerCanUpdateParty(_id, msg.sender) {
+    function updatePartyByOwner(address _sender, uint256 _id, bool _paySuccess, bool _reject)
+    public onlyOwnerCanUpdateParty(_id, _sender) {
         Party memory _party = parties[_id];
         _party.paySuccess = _paySuccess;
         _party.reject = _reject;

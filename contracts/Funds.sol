@@ -62,21 +62,21 @@ contract Funds is BaseFunds {
         baseFunds = BaseFunds(addr);
     }
     function newMember(string memory _name) public payable{
-        baseFunds.addMember(_name);
+        baseFunds.addMember(msg.sender, _name);
     }
     function newParty(address[] memory _members, uint256  _money, string memory  _message, string memory  _createdDate) public payable{
-        baseFunds.addParty(_members, _money, _message, _createdDate);
+        baseFunds.addParty(msg.sender, _members, _money, _message, _createdDate);
     }
     function requestRejectParty(uint256 _id) public {
         Party memory _party = baseFunds.getParty(_id);
         _party.requestReject = true;
-        baseFunds.updatePartyByCreator(_id, _party.members, _party.money, _party.message, _party.createdDate, _party.requestReject);
+        baseFunds.updatePartyByCreator(msg.sender, _id, _party.members, _party.money, _party.message, _party.createdDate, _party.requestReject);
     }
     function rejectParty(uint256 _id) public {
-        baseFunds.updatePartyByOwner(_id, false, true);
+        baseFunds.updatePartyByOwner(msg.sender, _id, false, true);
     }
     function acceptParty(uint256 _id) public {
-        baseFunds.updatePartyByOwner(_id, true, false);
+        baseFunds.updatePartyByOwner(msg.sender, _id, true, false);
         Party memory _party = baseFunds.getParty(_id);
         uint256 _moneyShared = _party.money / _party.members.length;
         for(uint256 i = 0; i < _party.members.length; i++){
