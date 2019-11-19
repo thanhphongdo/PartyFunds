@@ -13,7 +13,7 @@ export default {
   },
   methods: {
     callFunction(funcName, params) {
-      return $(this.$refs.dropdown).accordion(funcName, params);
+      return $(this.$refs.accordion).accordion(funcName, params);
     }
   },
   mounted() {

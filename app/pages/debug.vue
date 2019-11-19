@@ -11,28 +11,60 @@
       </div>
       <div class="ui submit button" @click="initAllCantract">Init contract</div>
     </div>
-    <div class="ui grid" v-for="(item, index) in accounts" :key="index" :class="{'tw-bg-green-light': item.active}">
-      <div class="twelve wide column">
-        <div class="tw-flex tw-flex-col tw-h-full tw-justify-center">
-          <div>{{hexFilter(item.address)}}</div>
-          <div class="tw-text-grey-darker tw-text-xs tw-italic">{{hexFilter(item.pk)}}</div>
+    <Accordion class="tw-mt-4" v-for="(item, index) in accounts" :key="index" ref="accountRow">
+      <div class="title" :class="{'tw-bg-green-light': item.active}">
+        <div class="tw-flex">
+          <div class>
+            <i class="dropdown icon"></i>
+          </div>
+          <div class="tw-flex-1">
+            <div class="tw-flex tw-flex-col tw-h-full tw-justify-center">
+              <div>{{hexFilter(item.address)}}</div>
+              <div class="tw-text-grey-darker tw-text-xs tw-italic">{{hexFilter(item.pk)}}</div>
+            </div>
+          </div>
+          <div>
+            <div class="tw-flex tw-justify-end">
+              <div
+                class="mini ui submit button inverted red icon"
+                @click="initContractAt(index, $event)"
+              >
+                <i class="angle double right icon"></i>
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- <div class="tw-flex tw-h-full tw-items-center">{{hexFilter(item.pk)}}</div> -->
       </div>
-      <div class="four wide column">
-        <div class="tw-flex tw-justify-end">
-          <div class="ui submit button" @click="initContractAt(index)">init</div>
+      <div class="content">
+        <div class="tw-flex tw-mb-2" v-for="(mItem, mIndex) in item.methods" :key="mIndex">
+          <div class="ui mini input tw-w-1/3 tw-mr-1">
+            <input type="text" placeholder="function" v-model="mItem.funcName" />
+          </div>
+          <div class="ui mini input tw-flex-1 tw-mr-1">
+            <input type="text" placeholder="params" v-model="mItem.params" />
+          </div>
+          <button class="mini ui icon inverted blue button" @click="executeMethod(mItem)">
+            <i class="paper plane outline icon"></i>
+          </button>
+        </div>
+        <div>
+          <button class="mini ui icon inverted green button tw-mr-1" @click="addMethods(index)">
+            <i class="plus icon"></i>
+          </button>
         </div>
       </div>
-    </div>
+    </Accordion>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import Accordion from "~/components/shared/Accordion.vue";
 
 export default {
-  components: {},
+  components: {
+    Accordion
+  },
   data() {
     return {
       formModel: {
@@ -77,9 +109,27 @@ export default {
         self.accounts.push({
           address: item,
           pk: listPrivateKey[index],
+          methods: [],
           active: false
         });
       });
+      let accountsBK = JSON.parse(localStorage["accounts"] || "[]");
+      for (let i = 0; i < self.accounts.length; i++) {
+        if (
+          accountsBK[i] &&
+          accountsBK[i].methods &&
+          accountsBK[i].methods.length
+        ) {
+          accountsBK[i].methods.forEach((item, index) => {
+            self.accounts[i].methods.push(item);
+          });
+        } else {
+          self.accounts[i].methods.push({
+            funcName: "",
+            params: ""
+          });
+        }
+      }
       console.log(self.accounts);
     },
     hexFilter(address) {
@@ -87,12 +137,42 @@ export default {
         address.substr(0, 10) + "..." + address.substr(address.length - 10, 10)
       );
     },
-    initContractAt(index){
-        this.initContract(this.accounts[index].pk);
-        for(let i = 0; i< this.accounts.length; i++){
-            this.accounts[i].active = false;
+    initContractAt(index, event) {
+      event.stopPropagation();
+      let sefl = this;
+      this.initContract(this.accounts[index].pk);
+      for (let i = 0; i < this.accounts.length; i++) {
+        this.accounts[i].active = false;
+      }
+      this.accounts[index].active = true;
+      setTimeout(() => {
+        sefl.$refs.accountRow[index].callFunction("open", 0);
+      }, 100);
+    },
+    executeMethod(methodData) {
+      this.saveAccounts();
+      let funcName = methodData.funcName;
+      let params = methodData.params.split("|");
+      this.callContract({
+        funcName,
+        params,
+        callback: data => {
+          console.log(data);
+        },
+        error: err => {
+          console.log(err);
         }
-        this.accounts[index].active = true;
+      });
+      console.log(methodData);
+    },
+    addMethods(index) {
+      this.accounts[index].methods.push({
+        funcName: "",
+        params: ""
+      });
+    },
+    saveAccounts() {
+      window.localStorage["accounts"] = JSON.stringify(this.accounts);
     }
   },
   mounted() {}
