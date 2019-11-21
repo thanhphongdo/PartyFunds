@@ -1,17 +1,17 @@
 <template>
   <div class="tw-flex tw-flex-col tw-h-full">
-    <ActionBar></ActionBar>
-    <div class="tw-flex-1 tw-p-4 tw-overflow-auto">
-      <nuxt v-if="initLoad" />
-      <!-- <div class="ui loader"></div> -->
-      <!-- <div class="ui segment">
-        <p></p>
-        <div class="ui active dimmer">
-          <div class="ui loader"></div>
-        </div>
-      </div> -->
+    <div v-if="!initLoad" class="ui segment app-loading">
+      <div class="ui active dimmer">
+        <div class="ui loader"></div>
+      </div>
     </div>
-    <TabBar></TabBar>
+    <div class="tw-flex tw-flex-col tw-h-full tw-bg-white">
+      <ActionBar></ActionBar>
+      <div class="tw-flex-1 tw-p-4 tw-overflow-auto">
+        <nuxt v-if="initLoad" />
+      </div>
+      <TabBar></TabBar>
+    </div>
   </div>
 </template>
 <script>

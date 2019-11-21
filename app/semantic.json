@@ -1,5 +1,5 @@
 {
-  "base": "semantic\\",
+  "base": "semantic/",
   "paths": {
     "source": {
       "config": "src/theme.config",
@@ -8,12 +8,12 @@
       "themes": "src/themes/"
     },
     "output": {
-      "packaged": "..\\assets\\semantic\\dist\\",
-      "uncompressed": "..\\assets\\semantic\\dist\\components\\",
-      "compressed": "..\\assets\\semantic\\dist\\components\\",
-      "themes": "..\\assets\\semantic\\dist\\themes\\"
+      "packaged": "../assets/semantic/dist/",
+      "uncompressed": "../assets/semantic/dist/components/",
+      "compressed": "../assets/semantic/dist/components/",
+      "themes": "../assets/semantic/dist/themes/"
     },
-    "clean": "dist/"
+    "clean": "../assets/semantic/dist/"
   },
   "permission": false,
   "autoInstall": false,
@@ -22,25 +22,51 @@
     "reset",
     "site",
     "button",
+    "container",
+    "divider",
+    "flag",
+    "header",
     "icon",
     "image",
     "input",
     "label",
+    "list",
     "loader",
+    "rail",
+    "reveal",
+    "segment",
+    "step",
+    "breadcrumb",
     "form",
     "grid",
     "menu",
     "message",
     "table",
+    "ad",
+    "card",
+    "comment",
+    "feed",
+    "item",
+    "statistic",
     "accordion",
     "checkbox",
+    "dimmer",
     "dropdown",
+    "embed",
     "modal",
+    "nag",
+    "popup",
+    "progress",
+    "rating",
     "search",
+    "shape",
     "sidebar",
+    "sticky",
     "tab",
     "transition",
-    "form"
+    "api",
+    "state",
+    "visibility"
   ],
   "version": "2.4.2"
 }
