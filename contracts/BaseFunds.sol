@@ -13,8 +13,14 @@ contract BaseFunds {
         uint256 index;
         bool isValue;
     }
+    struct Payer{
+        address member;
+        int256 money;
+    }
     struct Party{
         address creator;
+        address[] payerAddress;
+        int256[] payerMoney;
         address[] members;
         uint256 money;
         string message;
@@ -34,6 +40,28 @@ contract BaseFunds {
         require(
             !checkExists,
             "Member is exists"
+        );
+        _;
+    }
+    modifier memberExists(address _member) {
+        bool checkExists = members[_member].isValue;
+        require(
+            checkExists,
+            "Member is not exists"
+        );
+        _;
+    }
+    modifier partyValidate(address[] memory _payerAddress, int256[] memory _payerMoney) {
+        bool passValidate = true;
+        if(_payerAddress.length != _payerMoney.length){
+            passValidate = false;
+        }
+        for(uint256 i = 0; i < _payerAddress.length; i++){
+            passValidate = passValidate && members[_payerAddress[i]].isValue;
+        }
+        require(
+            passValidate,
+            "Check party validate fail"
         );
         _;
     }
@@ -112,21 +140,24 @@ contract BaseFunds {
         members[_addr].money = _money;
         memberList[members[_addr].index] = members[_addr];
     }
-    function updateMemberMoney(address _addr, int256 _money) public {
+    function updateMemberMoney(address _addr, int256 _money) public memberExists(_addr) {
         members[_addr].money += _money;
         memberList[members[_addr].index] = members[_addr];
     }
-    function addParty(address _sender, address[] memory _members, uint256  _money, string memory  _message, string memory  _createdDate) public{
-        Party memory _party = Party(_sender, _members, _money, _message, _createdDate, false, false, false, true);
+    function addParty(address _sender, address[] memory _payerAddress, int256[] memory _payerMoney, address[] memory _members, uint256  _money, string memory  _message, string memory  _createdDate) 
+    public partyValidate(_payerAddress, _payerMoney) {
+        Party memory _party = Party(_sender, _payerAddress, _payerMoney , _members, _money, _message, _createdDate, false, false, false, true);
         partyList.push(_party);
         parties[countParty] = _party;
         countParty++;
     }
     function updatePartyByCreator(
-        address _sender, uint256 _id, address[] memory _members, uint256 _money, string memory _message, string memory _createdDate, bool _requestReject
-    ) public onlyCreatorCanUpdateParty(_id, _sender){
+        address _sender, uint256 _id, address[] memory _payerAddress, int256[] memory _payerMoney, address[] memory _members, uint256 _money, string memory _message, string memory _createdDate, bool _requestReject
+    ) public onlyCreatorCanUpdateParty(_id, _sender) {
         Party memory _party = parties[_id];
         _party.members = _members;
+        _party.payerAddress = _payerAddress;
+        _party.payerMoney = _payerMoney;
         _party.money = _money;
         _party.message = _message;
         _party.createdDate = _createdDate;

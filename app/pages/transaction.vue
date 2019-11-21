@@ -2,7 +2,7 @@
   <div class="container">
     <div class="tw-border tw-border-blue-light tw-border-solid tw-rounded-lg tw-p-4">
       <div>
-        <form class="ui form">
+        <form class="ui form" v-validate="{onSuccess: transferMoney}">
           <div class="field">
             <label>Transfer money</label>
           </div>
@@ -14,19 +14,20 @@
               class="fluid selection"
               :values="data.members"
               placeholder="Member"
+              name="member"
             ></DropDown>
           </div>
           <div class="field">
             <label>Value</label>
             <input type="number" step="10000" name="value" placeholder="value" />
           </div>
-          <button class="ui button" type="button">Send</button>
+          <button class="ui submit button" type="button">Send</button>
         </form>
       </div>
     </div>
     <div class="tw-border tw-border-blue-light tw-border-solid tw-rounded-lg tw-p-4 tw-mt-4">
       <div>
-        <form class="ui form">
+        <form class="ui form" v-validate>
           <div class="field">
             <label>Create party</label>
           </div>
@@ -38,13 +39,14 @@
               class="fluid selection multiple"
               :values="data.members"
               placeholder="Member"
+              name="members"
             ></DropDown>
           </div>
           <div class="field">
             <label>Value</label>
             <input type="number" step="10000" name="value" placeholder="value" />
           </div>
-          <button class="ui button" type="button">Send</button>
+          <button class="ui submit button" type="button">Send</button>
         </form>
       </div>
     </div>
@@ -53,6 +55,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import DropDown from "~/components/shared/DropDown.vue";
+import { ACTION, MUTATION } from "~/store/enums.js";
 
 export default {
   components: {
@@ -64,9 +67,6 @@ export default {
     };
   },
   computed: mapState(["contractConfig", "data", "model"]),
-  methods: {
-    ...mapMutations(["initContract", "setPage"])
-  },
   mounted() {
     // $(".member").dropdown({});
     // $(".members").dropdown({});
@@ -75,6 +75,12 @@ export default {
     //   "set selected",
     //   this.model.transaction.members
     // );
+  },
+  methods: {
+    ...mapMutations(["initContract", "setPage"]),
+    transferMoney(event, fields) {
+      console.log(fields);
+    }
   }
 };
 </script>

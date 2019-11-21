@@ -1,20 +1,13 @@
 <template>
-  <!-- <div ref="dropdown" class="ui fluid selection dropdown">
-    <input name="tags" type="hidden" />
-    <i class="dropdown icon"></i>
-    <div class="default text">{{placeholder}}</div>
-    <div class="menu">
-      <div v-for="(item,index) in data" :key="index" class="item" data-value="angular">{{item.text}}</div>
-    </div>
-  </div>-->
   <div ref="dropdown" class="ui dropdown">
+    <input type="hidden" :name="name">
     <div class="text"></div>
     <i class="dropdown icon"></i>
   </div>
 </template>
 <script>
 export default {
-  props: ["classList", "values", "placeholder", "options", "value"],
+  props: ["classList", "values", "placeholder", "options", "name", "value"],
   data() {
     return {
       ref: null

@@ -33,6 +33,7 @@ module.exports = {
   plugins: [
     // '~/plugins/jquery.js'
     '~/plugins/i18n.js',
+    '~/plugins/directives.js',
     { src: '~/assets/jquery/dist/jquery.min.js', ssr: false },
     { src: '~/assets/semantic/dist/semantic.min.js', ssr: false },
     { src: '~/assets/ethers/dist/ethers-v4.min.js', ssr: false },

@@ -1,6 +1,6 @@
 {
     "url": "http://localhost:8545",
-    "contractAddress": "0x19C6DDB4fE325700CA12AB7c40b90154aFD81E58",
+    "contractAddress": "0x9232aEf402A2FD4c4C6cE3b8917b992FF01b0200",
     "contractABI": [
         {
             "constant": false,
@@ -47,6 +47,16 @@
                 },
                 {
                     "internalType": "address[]",
+                    "name": "_payerAddress",
+                    "type": "address[]"
+                },
+                {
+                    "internalType": "int256[]",
+                    "name": "_payerMoney",
+                    "type": "int256[]"
+                },
+                {
+                    "internalType": "address[]",
                     "name": "_members",
                     "type": "address[]"
                 },
@@ -90,6 +100,16 @@
         {
             "constant": false,
             "inputs": [
+                {
+                    "internalType": "address[]",
+                    "name": "_payerAddress",
+                    "type": "address[]"
+                },
+                {
+                    "internalType": "int256[]",
+                    "name": "_payerMoney",
+                    "type": "int256[]"
+                },
                 {
                     "internalType": "address[]",
                     "name": "_members",
@@ -182,6 +202,26 @@
             "inputs": [
                 {
                     "internalType": "address",
+                    "name": "_receiver",
+                    "type": "address"
+                },
+                {
+                    "internalType": "int256",
+                    "name": "_money",
+                    "type": "int256"
+                }
+            ],
+            "name": "transferMoney",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "address",
                     "name": "_addr",
                     "type": "address"
                 },
@@ -234,6 +274,16 @@
                     "internalType": "uint256",
                     "name": "_id",
                     "type": "uint256"
+                },
+                {
+                    "internalType": "address[]",
+                    "name": "_payerAddress",
+                    "type": "address[]"
+                },
+                {
+                    "internalType": "int256[]",
+                    "name": "_payerMoney",
+                    "type": "int256[]"
                 },
                 {
                     "internalType": "address[]",
@@ -508,6 +558,16 @@
                         },
                         {
                             "internalType": "address[]",
+                            "name": "payerAddress",
+                            "type": "address[]"
+                        },
+                        {
+                            "internalType": "int256[]",
+                            "name": "payerMoney",
+                            "type": "int256[]"
+                        },
+                        {
+                            "internalType": "address[]",
                             "name": "members",
                             "type": "address[]"
                         },
@@ -578,6 +638,16 @@
                             "internalType": "address",
                             "name": "creator",
                             "type": "address"
+                        },
+                        {
+                            "internalType": "address[]",
+                            "name": "payerAddress",
+                            "type": "address[]"
+                        },
+                        {
+                            "internalType": "int256[]",
+                            "name": "payerMoney",
+                            "type": "int256[]"
                         },
                         {
                             "internalType": "address[]",

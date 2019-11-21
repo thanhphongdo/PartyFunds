@@ -1,5 +1,6 @@
 import Vuex from 'vuex';
 import EtherService from '../services/ether.service';
+import { ACTION, MUTATION, CONTRACT } from './enums';
 const contractConfig = require('./contract.config.json');
 const contract = new EtherService(contractConfig.url, contractConfig.contractAddress, contractConfig.contractABI);
 const createStore = () => {
@@ -14,20 +15,7 @@ const createStore = () => {
         account: false
       },
       data: {
-        members: [
-          {
-            value: 1,
-            name: 'Phong Do'
-          },
-          {
-            value: 2,
-            name: 'Hoang Ng'
-          },
-          {
-            value: 3,
-            name: 'Tai Bui'
-          }
-        ]
+        members: []
       },
       model: {
         transaction: {
@@ -72,6 +60,27 @@ const createStore = () => {
           state.page[key] = false;
         });
         state.page[page] = true;
+      }
+    },
+    actions: {
+      fetchMemberList(context, { callback, error }) {
+        context.commit(MUTATION.callContract, {
+          funcName: CONTRACT.getAllMember,
+          params: null,
+          callback: (data) => {
+            context.state.data.members = data.map(item => {
+              return {
+                value: item.id,
+                name: item.name,
+                other: item
+              }
+            });
+            callback(data);
+          },
+          error: (err) => {
+            error(err);
+          }
+        })
       }
     },
     modules: {
