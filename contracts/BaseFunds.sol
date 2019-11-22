@@ -5,6 +5,7 @@ contract BaseFunds {
     int256 totalFunds = 0;
     uint countMember = 0;
     uint countParty = 0;
+    uint countTransferHistory = 0;
     uint testCount = 0;
     struct Member{
         address id;
@@ -30,8 +31,16 @@ contract BaseFunds {
         bool requestReject;
         bool isValue;
     }
+    struct TransferHistory{
+        address sender;
+        address receiver;
+        int256 money;
+        bool isDeposit;
+        bool accept;
+    }
     mapping(address=>Member) members;
     mapping(uint256=>Party) parties;
+    mapping(uint256=>TransferHistory) transferHistories;
     Member fundHost;
     Member[] memberList;
     Party[] partyList;
@@ -126,6 +135,15 @@ contract BaseFunds {
     function getParty(uint256 _id) public view returns (Party memory) {
         return parties[_id];
     }
+    function getTransferHistoriyList(uint256 _page, uint256 _perPage) public view returns (TransferHistory[] memory){
+        TransferHistory[] memory _transferHistoryList = new TransferHistory[](_perPage);
+        uint256 _fromIndex = (_page - 1) * _perPage;
+        uint256 _toIndex = _page * _perPage;
+        for(uint i = _fromIndex; i < _toIndex; i++) {
+            _transferHistoryList[i - _fromIndex] = transferHistories[i];
+        }
+        return _transferHistoryList;
+    }
     function getTestCount() public view returns (uint) {
         return testCount;
     }
@@ -144,9 +162,22 @@ contract BaseFunds {
         members[_addr].money += _money;
         memberList[members[_addr].index] = members[_addr];
     }
-    function addParty(address _sender, address[] memory _payerAddress, int256[] memory _payerMoney, address[] memory _members, uint256  _money, string memory  _message, string memory  _createdDate) 
-    public partyValidate(_payerAddress, _payerMoney) {
-        Party memory _party = Party(_sender, _payerAddress, _payerMoney , _members, _money, _message, _createdDate, false, false, false, true);
+    function addParty(
+        address _sender, address[] memory _payerAddress, int256[] memory _payerMoney, address[] memory _members, uint256  _money, string memory  _message, string memory  _createdDate
+    ) public partyValidate(_payerAddress, _payerMoney) {
+        Party memory _party = Party(
+            _sender,
+            _payerAddress,
+            _payerMoney,
+            _members,
+            _money,
+            _message,
+            _createdDate,
+            false,
+            false,
+            false,
+            true
+        );
         partyList.push(_party);
         parties[countParty] = _party;
         countParty++;
@@ -173,7 +204,19 @@ contract BaseFunds {
         partyList[_id] = _party;
         parties[_id] = _party;
     }
-
+    function addTransferHistory(address _sender, address _receiver, int256 _money, bool _isDeposit, bool _accept) public {
+        transferHistories[countTransferHistory] = TransferHistory(_sender, _receiver, _money, _isDeposit, _accept);
+        countTransferHistory++;
+    }
+    function updateTransferHistory(uint256 _id, address _sender, address _receiver, int256 _money, bool _isDeposit, bool _accept) public {
+        TransferHistory memory _transferHistory = transferHistories[_id];
+        _transferHistory.sender = _sender;
+        _transferHistory.receiver = _receiver;
+        _transferHistory.money = _money;
+        _transferHistory.isDeposit = _isDeposit;
+        _transferHistory.accept = _accept;
+        transferHistories[_id] = _transferHistory;
+    }
     function setTestCount(uint val) public {
         testCount += val;
     }

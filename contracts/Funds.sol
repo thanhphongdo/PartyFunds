@@ -34,12 +34,10 @@ contract Funds is BaseFunds {
     //     );
     //     _;
     // }
-    
     constructor() public{
         owner = msg.sender;
         // fundHost = Member(msg.sender, "HOST", 0);
     }
-    
     function getTotalFund() public view returns (int256) {
         return baseFunds.getTotalFund();
     }
@@ -69,14 +67,27 @@ contract Funds is BaseFunds {
     function transferMoney(address _receiver, int256 _money) public {
         baseFunds.updateMemberMoney(msg.sender, - _money);
         baseFunds.updateMemberMoney(_receiver, _money);
+        baseFunds.addTransferHistory(msg.sender, _receiver, _money, false, true);
     }
-    function newParty(address[] memory _payerAddress, int256[] memory _payerMoney, address[] memory _members, uint256  _money, string memory  _message, string memory  _createdDate) public payable{
+    function newParty(
+        address[] memory _payerAddress, int256[] memory _payerMoney, address[] memory _members, uint256  _money, string memory  _message, string memory  _createdDate
+        ) public payable{
         baseFunds.addParty(msg.sender, _payerAddress, _payerMoney, _members, _money, _message, _createdDate);
     }
     function requestRejectParty(uint256 _id) public {
         Party memory _party = baseFunds.getParty(_id);
         _party.requestReject = true;
-        baseFunds.updatePartyByCreator(msg.sender, _id, _party.payerAddress, _party.payerMoney, _party.members, _party.money, _party.message, _party.createdDate, _party.requestReject);
+        baseFunds.updatePartyByCreator(
+            msg.sender,
+            _id,
+            _party.payerAddress,
+            _party.payerMoney,
+            _party.members,
+            _party.money,
+            _party.message,
+            _party.createdDate,
+            _party.requestReject
+        );
     }
     function rejectParty(uint256 _id) public {
         baseFunds.updatePartyByOwner(msg.sender, _id, false, true);
