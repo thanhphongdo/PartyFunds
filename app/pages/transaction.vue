@@ -27,7 +27,7 @@
     </div>
     <div class="tw-border tw-border-blue-light tw-border-solid tw-rounded-lg tw-p-4 tw-mt-4">
       <div>
-        <form class="ui form" v-validate>
+        <form class="ui form" v-validate="{onSuccess: transferMoney}">
           <div class="field">
             <label>Create party</label>
           </div>

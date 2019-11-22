@@ -24,8 +24,8 @@
           </div>
           <div class="tw-flex-1">
             <div class="tw-flex tw-flex-col tw-h-full tw-justify-center">
-              <div>{{hexFilter(item.address)}}</div>
-              <div class="tw-text-grey-darker tw-text-xs tw-italic">{{hexFilter(item.pk)}}</div>
+              <div>({{ index + 1 }}) - {{ hexFilter(item.address) }}</div>
+              <div class="tw-text-grey-darker tw-text-xs tw-italic">{{ hexFilter(item.pk) }}</div>
             </div>
           </div>
           <div>
@@ -45,9 +45,6 @@
           <div class="ui mini input tw-w-1/3 tw-mr-1 tw-self-start">
             <input type="text" placeholder="function" v-model="mItem.funcName" />
           </div>
-          <!-- <div class="ui mini input tw-flex-1 tw-mr-1">
-            <textarea class="tw-w-full tw-max-w-full" type="text" placeholder="params" v-model="mItem.params"></textarea>
-          </div>-->
           <div class="ui form tw-flex-1 tw-mr-1">
             <div class="field">
               <textarea
