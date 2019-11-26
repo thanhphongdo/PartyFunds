@@ -5,58 +5,9 @@ contract Funds is BaseFunds {
     address owner;
     address baseFundsAdrr;
     BaseFunds baseFunds;
-    modifier onlyOwner() { // Modifier
-        require(
-            msg.sender == owner,
-            "Only Owner can call this."
-        );
-        _;
-    }
-    modifier onlyMember() { // Modifier
-        require(
-            msg.sender != owner,
-            "Only Owner can call this."
-        );
-        _;
-    }
-    // modifier memberExists(address member) { // Modifier
-    //     // Member[] memberList = baseFunds.memberList;
-    //     bool checkExists = false;
-    //     for(uint i = 0; i < baseFunds.getMemberList().length; i++) {
-    //         if (baseFunds.getMemberList()[i].id == member) {
-    //             checkExists = true;
-    //             break;
-    //         }
-    //     }
-    //     require(
-    //         checkExists,
-    //         "Member not exists"
-    //     );
-    //     _;
-    // }
     constructor() public{
         owner = msg.sender;
-        // fundHost = Member(msg.sender, "HOST", 0);
     }
-    function getTotalFund() public view returns (int256) {
-        return baseFunds.getTotalFund();
-    }
-    function getFundHost() public view returns (Member memory) {
-        return baseFunds.getFundHost();
-    }
-    function getMemberList(uint256 _page, uint256 _perPage) public view returns (Member[] memory) {
-        return baseFunds.getMemberList(_page, _perPage);
-    }
-    function getMember(address addr) public view returns (Member memory) {
-        return baseFunds.getMember(addr);
-    }
-    function getPartyList(uint256 _page, uint256 _perPage) public view returns (Party[] memory) {
-        return baseFunds.getPartyList(_page, _perPage);
-    }
-    function getTestCount() public view returns (uint) {
-        return baseFunds.getTestCount();
-    }
-
     function setBaseFundAddress(address addr) public {
         baseFundsAdrr = addr;
         baseFunds = BaseFunds(addr);
@@ -107,11 +58,19 @@ contract Funds is BaseFunds {
         uint256 _moneyShared = _party.money / _party.members.length;
         return _moneyShared;
     }
-    function setTestCount(uint val) public {
-        baseFunds.setTestCount(val);
-        // baseFunds.testCount = val;
+    function getTotalFund() public view returns (int256) {
+        return baseFunds.getTotalFund();
     }
-    function getAllMember() public view returns (Member[] memory) {
-        return baseFunds.getAllMember();
+    function getFundHost() public view returns (Member memory) {
+        return baseFunds.getFundHost();
+    }
+    function getMemberList(uint256 _page, uint256 _perPage) public view returns (Member[] memory) {
+        return baseFunds.getMemberList(_page, _perPage);
+    }
+    function getMember(address addr) public view returns (Member memory) {
+        return baseFunds.getMember(addr);
+    }
+    function getPartyList(uint256 _page, uint256 _perPage) public view returns (Party[] memory) {
+        return baseFunds.getPartyList(_page, _perPage);
     }
 }

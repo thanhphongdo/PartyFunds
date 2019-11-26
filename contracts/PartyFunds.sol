@@ -1,6 +1,6 @@
 pragma solidity >=0.4.22 <0.6.0;
 pragma experimental ABIEncoderV2;
-contract BaseFunds {
+contract PartyFunds {
     address owner;
     int256 totalFunds = 0;
     uint countMember = 0;
@@ -111,14 +111,33 @@ contract BaseFunds {
         return fundHost;
     }
     function getMemberList(uint256 _page, uint256 _perPage) public view returns (Member[] memory) {
-        Member[] memory _memberList = new Member[](_perPage);
         uint256 _fromIndex = (_page - 1) * _perPage;
         uint256 _toIndex = _page * _perPage;
+        uint256 countItems = 0;
+        if(_toIndex > memberList.length){
+            countItems = memberList.length - _fromIndex;
+        }
+        else {
+            countItems = _perPage;
+        }
+        Member[] memory _memberList = new Member[](countItems);
         for(uint i = _fromIndex; i < _toIndex; i++) {
             _memberList[i - _fromIndex] = memberList[i];
         }
         return _memberList;
     }
+    // function getMemberListCount(uint256 _page, uint256 _perPage) public view returns (uint256) {
+    //     uint256 _fromIndex = (_page - 1) * _perPage;
+    //     uint256 _toIndex = _page * _perPage;
+    //     uint256 countItems = 0;
+    //     if(_toIndex > memberList.length){
+    //         countItems = memberList.length - _fromIndex;
+    //     }
+    //     else {
+    //         countItems = _perPage;
+    //     }
+    //     return countItems;
+    // }
     function getMember(address _addr) public view returns (Member memory) {
         return members[_addr];
     }
@@ -143,10 +162,10 @@ contract BaseFunds {
         }
         return _transferHistoryList;
     }
-    function addMember(address _sender, string memory _name) public memberNotExists(_sender){
-        Member memory member = Member(_sender, _name, 0, countMember, true);
+    function addMember(string memory _name) public memberNotExists(msg.sender){
+        Member memory member = Member(msg.sender, _name, 0, countMember, true);
         memberList.push(member);
-        members[_sender] = member;
+        members[msg.sender] = member;
         countMember++;
     }
     function updateMember(address _addr, string memory _name, int256 _money) public {
@@ -159,10 +178,10 @@ contract BaseFunds {
         memberList[members[_addr].index] = members[_addr];
     }
     function addParty(
-        address _sender, address[] memory _payerAddress, int256[] memory _payerMoney, address[] memory _members, uint256  _money, string memory  _message, string memory  _createdDate
+        address[] memory _payerAddress, int256[] memory _payerMoney, address[] memory _members, uint256  _money, string memory  _message, string memory  _createdDate
     ) public partyValidate(_payerAddress, _payerMoney) {
         Party memory _party = Party(
-            _sender,
+            msg.sender,
             _payerAddress,
             _payerMoney,
             _members,
@@ -179,8 +198,8 @@ contract BaseFunds {
         countParty++;
     }
     function updatePartyByCreator(
-        address _sender, uint256 _id, address[] memory _payerAddress, int256[] memory _payerMoney, address[] memory _members, uint256 _money, string memory _message, string memory _createdDate, bool _requestReject
-    ) public onlyCreatorCanUpdateParty(_id, _sender) {
+        uint256 _id, address[] memory _payerAddress, int256[] memory _payerMoney, address[] memory _members, uint256 _money, string memory _message, string memory _createdDate, bool _requestReject
+    ) public onlyCreatorCanUpdateParty(_id, msg.sender) {
         Party memory _party = parties[_id];
         _party.members = _members;
         _party.payerAddress = _payerAddress;
@@ -192,28 +211,57 @@ contract BaseFunds {
         partyList[_id] = _party;
         parties[_id] = _party;
     }
-    function updatePartyByOwner(address _sender, uint256 _id, bool _paySuccess, bool _reject)
-    public onlyOwnerCanUpdateParty(_id, _sender) {
+    function updatePartyByOwner(uint256 _id, bool _paySuccess, bool _reject)
+    public onlyOwnerCanUpdateParty(_id, msg.sender) {
         Party memory _party = parties[_id];
         _party.paySuccess = _paySuccess;
         _party.reject = _reject;
         partyList[_id] = _party;
         parties[_id] = _party;
     }
-    function addTransferHistory(address _sender, address _receiver, int256 _money, bool _isDeposit, bool _accept) public {
-        transferHistories[countTransferHistory] = TransferHistory(_sender, _receiver, _money, _isDeposit, _accept);
+    function addTransferHistory(address _receiver, int256 _money, bool _isDeposit, bool _accept) public {
+        transferHistories[countTransferHistory] = TransferHistory(msg.sender, _receiver, _money, _isDeposit, _accept);
         countTransferHistory++;
     }
-    function updateTransferHistory(uint256 _id, address _sender, address _receiver, int256 _money, bool _isDeposit, bool _accept) public {
+    function updateTransferHistory(uint256 _id, address _receiver, int256 _money, bool _isDeposit, bool _accept) public {
         TransferHistory memory _transferHistory = transferHistories[_id];
-        _transferHistory.sender = _sender;
+        _transferHistory.sender = msg.sender;
         _transferHistory.receiver = _receiver;
         _transferHistory.money = _money;
         _transferHistory.isDeposit = _isDeposit;
         _transferHistory.accept = _accept;
         transferHistories[_id] = _transferHistory;
     }
-    function getAllMember() public view returns (Member[] memory) {
-        return memberList;
+    function transferMoney(address _receiver, int256 _money) public {
+        updateMemberMoney(msg.sender, - _money);
+        updateMemberMoney(_receiver, _money);
+        addTransferHistory(_receiver, _money, false, true);
+    }
+    function requestRejectParty(uint256 _id) public {
+        Party memory _party = getParty(_id);
+        _party.requestReject = true;
+        updatePartyByCreator(
+            _id,
+            _party.payerAddress,
+            _party.payerMoney,
+            _party.members,
+            _party.money,
+            _party.message,
+            _party.createdDate,
+            _party.requestReject
+        );
+    }
+    function rejectParty(uint256 _id) public {
+        updatePartyByOwner(_id, false, true);
+    }
+    function acceptParty(uint256 _id) public {
+        Party memory _party = getParty(_id);
+        if(!_party.paySuccess){
+            updatePartyByOwner(_id, true, false);
+            uint256 _moneyShared = _party.money / _party.members.length;
+            for(uint256 i = 0; i < _party.members.length; i++){
+                updateMemberMoney(_party.members[i], -int256(_moneyShared));
+            }
+        }
     }
 }

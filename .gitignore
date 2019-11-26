@@ -75,6 +75,7 @@ typings/
 
 # Serverless directories
 .serverless
+**/*/build
 
 # IDE / Editor
 .idea
@@ -85,3 +86,6 @@ sw.*
 
 # Mac OSX
 .DS_Store
+build/contracts/Funds.json
+build/contracts/Migrations.json
+build/contracts/BaseFunds.json
