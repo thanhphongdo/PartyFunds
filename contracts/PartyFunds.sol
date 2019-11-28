@@ -114,8 +114,9 @@ contract PartyFunds {
         uint256 _fromIndex = (_page - 1) * _perPage;
         uint256 _toIndex = _page * _perPage;
         uint256 countItems = 0;
-        if(_toIndex > memberList.length){
-            countItems = memberList.length - _fromIndex;
+        if(_toIndex > countMember){
+            countItems = countMember - _fromIndex;
+            _toIndex = countItems + _fromIndex;
         }
         else {
             countItems = _perPage;
@@ -126,25 +127,21 @@ contract PartyFunds {
         }
         return _memberList;
     }
-    // function getMemberListCount(uint256 _page, uint256 _perPage) public view returns (uint256) {
-    //     uint256 _fromIndex = (_page - 1) * _perPage;
-    //     uint256 _toIndex = _page * _perPage;
-    //     uint256 countItems = 0;
-    //     if(_toIndex > memberList.length){
-    //         countItems = memberList.length - _fromIndex;
-    //     }
-    //     else {
-    //         countItems = _perPage;
-    //     }
-    //     return countItems;
-    // }
     function getMember(address _addr) public view returns (Member memory) {
         return members[_addr];
     }
     function getPartyList(uint256 _page, uint256 _perPage) public view returns (Party[] memory) {
-        Party[] memory _partyList = new Party[](_perPage);
         uint256 _fromIndex = (_page - 1) * _perPage;
         uint256 _toIndex = _page * _perPage;
+        uint256 countItems = 0;
+        if(_toIndex > countParty){
+            countItems = countParty - _fromIndex;
+            _toIndex = countItems + _fromIndex;
+        }
+        else {
+            countItems = _perPage;
+        }
+        Party[] memory _partyList = new Party[](countItems);
         for(uint i = _fromIndex; i < _toIndex; i++) {
             _partyList[i - _fromIndex] = parties[i];
         }
@@ -154,9 +151,17 @@ contract PartyFunds {
         return parties[_id];
     }
     function getTransferHistoriyList(uint256 _page, uint256 _perPage) public view returns (TransferHistory[] memory){
-        TransferHistory[] memory _transferHistoryList = new TransferHistory[](_perPage);
         uint256 _fromIndex = (_page - 1) * _perPage;
         uint256 _toIndex = _page * _perPage;
+        uint256 countItems = 0;
+        if(_toIndex > countTransferHistory){
+            countItems = countTransferHistory - _fromIndex;
+            _toIndex = countItems + _fromIndex;
+        }
+        else {
+            countItems = _perPage;
+        }
+        TransferHistory[] memory _transferHistoryList = new TransferHistory[](countItems);
         for(uint i = _fromIndex; i < _toIndex; i++) {
             _transferHistoryList[i - _fromIndex] = transferHistories[i];
         }
@@ -173,8 +178,13 @@ contract PartyFunds {
         members[_addr].money = _money;
         memberList[members[_addr].index] = members[_addr];
     }
-    function updateMemberMoney(address _addr, int256 _money) public memberExists(_addr) {
-        members[_addr].money += _money;
+    function updateMemberMoney(address _addr, int256 _money, bool _isAdd) public memberExists(_addr) {
+        if(_isAdd){
+            members[_addr].money += _money;
+        }
+        else {
+            members[_addr].money -= _money;
+        }
         memberList[members[_addr].index] = members[_addr];
     }
     function addParty(
@@ -233,8 +243,8 @@ contract PartyFunds {
         transferHistories[_id] = _transferHistory;
     }
     function transferMoney(address _receiver, int256 _money) public {
-        updateMemberMoney(msg.sender, - _money);
-        updateMemberMoney(_receiver, _money);
+        updateMemberMoney(msg.sender, _money, false);
+        updateMemberMoney(_receiver, _money, true);
         addTransferHistory(_receiver, _money, false, true);
     }
     function requestRejectParty(uint256 _id) public {
@@ -260,7 +270,7 @@ contract PartyFunds {
             updatePartyByOwner(_id, true, false);
             uint256 _moneyShared = _party.money / _party.members.length;
             for(uint256 i = 0; i < _party.members.length; i++){
-                updateMemberMoney(_party.members[i], -int256(_moneyShared));
+                updateMemberMoney(_party.members[i], int256(_moneyShared), false);
             }
         }
     }

@@ -66,7 +66,7 @@ const createStore = () => {
       fetchMemberList(context, { callback, error }) {
         context.commit(MUTATION.callContract, {
           funcName: CONTRACT.getMemberList,
-          params: [1,100],
+          params: [1,10],
           callback: (data) => {
             context.state.data.members = data.map(item => {
               return {
