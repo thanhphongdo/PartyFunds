@@ -1,6 +1,6 @@
 {
-    "url": "https://ropsten.infura.io/v3/414718f054ea41809a23841edffc6257",
-    "contractAddress": "0x88Ecd4c3BFeE3ce2878Ee197D53084b7BB1bC647",
+    "url": "http://localhost:8545",
+    "contractAddress": "0xbEd4aCe97CD92a6709350375A35Ca8B0bA08323c",
     "contractABI": [
       {
         "constant": true,

@@ -172,9 +172,11 @@ export default {
         params: params,
         callback: data => {
           console.log(data);
+          window.callbackData = data;
         },
         error: err => {
           console.log(err);
+          window.callbackError = err;
         }
       });
       console.log(methodData);

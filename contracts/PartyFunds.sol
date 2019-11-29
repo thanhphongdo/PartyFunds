@@ -269,8 +269,11 @@ contract PartyFunds {
         if(!_party.paySuccess){
             updatePartyByOwner(_id, true, false);
             uint256 _moneyShared = _party.money / _party.members.length;
-            for(uint256 i = 0; i < _party.members.length; i++){
-                updateMemberMoney(_party.members[i], int256(_moneyShared), false);
+            for(uint256 i = 0; i < _party.payerAddress.length; i++){
+                updateMemberMoney(_party.payerAddress[i], _party.payerMoney[i], true);
+            }
+            for(uint256 j = 0; j < _party.members.length; j++){
+                updateMemberMoney(_party.members[j], int256(_moneyShared), false);
             }
         }
     }
