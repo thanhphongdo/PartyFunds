@@ -1,8 +1,9 @@
 import Vuex from 'vuex';
 import EtherService from '../services/ether.service';
 import { ACTION, MUTATION, CONTRACT } from './enums';
+const partyFundsContract = require('../contract/PartyFunds.json');partyFundsContract
 const contractConfig = require('./contract.config.json');
-const contract = new EtherService(contractConfig.url, contractConfig.contractAddress, contractConfig.contractABI);
+const contract = new EtherService(contractConfig.url, contractConfig.contractAddress, partyFundsContract.abi);
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({

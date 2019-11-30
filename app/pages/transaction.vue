@@ -19,7 +19,7 @@
           </div>
           <div class="field">
             <label>Value</label>
-            <input type="number" step="10000" name="value" placeholder="value" />
+            <input type="number" step="10000" min="1" name="value" placeholder="value" />
           </div>
           <button class="ui submit button" type="button">Send</button>
         </form>
@@ -44,7 +44,7 @@
           </div>
           <div class="field">
             <label>Value</label>
-            <input type="number" step="10000" name="value" placeholder="value" />
+            <input type="number" step="10000" min="1" name="value" placeholder="value" />
           </div>
           <button class="ui submit button" type="button">Send</button>
         </form>

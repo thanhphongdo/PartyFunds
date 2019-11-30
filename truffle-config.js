@@ -18,7 +18,7 @@
  *
  */
 
-// const HDWalletProvider = require('truffle-hdwallet-provider');
+const HDWalletProvider = require('truffle-hdwallet-provider');
 const infuraKey = "fj4jll3k.....";
 const mnemonic = 'afraid treat coral leopard achieve across cake useless rose cable hint mosquito';
 //
@@ -47,7 +47,7 @@ module.exports = {
      host: "127.0.0.1",     // Localhost (default: none)
      port: 8545,            // Standard Ethereum port (default: none)
      network_id: "*",       // Any network (default: none)
-     from: "0x366b547d2F52fd8C015A441Def6a2dC4bF34B80F",
+     from: "0xb0c7840712F57635A3Ba9D5c1773b2b38d9Db9c3",
     },
 
     // Another network with more advanced options...
@@ -99,3 +99,5 @@ module.exports = {
     }
   }
 }
+//truffle mirgate --network development --contracts_build_directory ./app/contract --reset
+//truffle mirgate --network ropsten --contracts_build_directory ./app/contract --reset

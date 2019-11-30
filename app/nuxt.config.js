@@ -38,7 +38,7 @@ module.exports = {
     { src: '~/assets/semantic/dist/semantic.min.js', ssr: false },
     { src: '~/assets/ethers/dist/ethers-v4.min.js', ssr: false },
     { src: '~/assets/crypto/dist/crypto.min.js', ssr: false },
-    // { src: '~/assets/web3/dist/web3.min.js', ssr: false },
+    { src: '~/assets/main/main.js', ssr: false },
   ],
   /*
   ** Nuxt.js dev-modules

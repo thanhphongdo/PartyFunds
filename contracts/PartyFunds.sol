@@ -173,12 +173,12 @@ contract PartyFunds {
         members[msg.sender] = member;
         countMember++;
     }
-    function updateMember(address _addr, string memory _name, int256 _money) public {
+    function updateMember(address _addr, string memory _name, int256 _money) private {
         members[_addr].name = _name;
         members[_addr].money = _money;
         memberList[members[_addr].index] = members[_addr];
     }
-    function updateMemberMoney(address _addr, int256 _money, bool _isAdd) public memberExists(_addr) {
+    function updateMemberMoney(address _addr, int256 _money, bool _isAdd) private memberExists(_addr) {
         if(_isAdd){
             members[_addr].money += _money;
         }
@@ -209,7 +209,7 @@ contract PartyFunds {
     }
     function updatePartyByCreator(
         uint256 _id, address[] memory _payerAddress, int256[] memory _payerMoney, address[] memory _members, uint256 _money, string memory _message, string memory _createdDate, bool _requestReject
-    ) public onlyCreatorCanUpdateParty(_id, msg.sender) {
+    ) private onlyCreatorCanUpdateParty(_id, msg.sender) {
         Party memory _party = parties[_id];
         _party.members = _members;
         _party.payerAddress = _payerAddress;
@@ -222,18 +222,18 @@ contract PartyFunds {
         parties[_id] = _party;
     }
     function updatePartyByOwner(uint256 _id, bool _paySuccess, bool _reject)
-    public onlyOwnerCanUpdateParty(_id, msg.sender) {
+    private onlyOwnerCanUpdateParty(_id, msg.sender) {
         Party memory _party = parties[_id];
         _party.paySuccess = _paySuccess;
         _party.reject = _reject;
         partyList[_id] = _party;
         parties[_id] = _party;
     }
-    function addTransferHistory(address _receiver, int256 _money, bool _isDeposit, bool _accept) public {
+    function addTransferHistory(address _receiver, int256 _money, bool _isDeposit, bool _accept) private {
         transferHistories[countTransferHistory] = TransferHistory(msg.sender, _receiver, _money, _isDeposit, _accept);
         countTransferHistory++;
     }
-    function updateTransferHistory(uint256 _id, address _receiver, int256 _money, bool _isDeposit, bool _accept) public {
+    function updateTransferHistory(uint256 _id, address _receiver, int256 _money, bool _isDeposit, bool _accept) private {
         TransferHistory memory _transferHistory = transferHistories[_id];
         _transferHistory.sender = msg.sender;
         _transferHistory.receiver = _receiver;

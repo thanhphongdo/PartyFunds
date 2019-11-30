@@ -14,6 +14,10 @@ module.exports = {
             {
                 type: 'empty',
                 prompt: 'Nhập số tiền'
+            },
+            {
+                type: 'greaterThan[0]',
+                prompt: 'Nhập số tiền lớn hơn 0'
             }
         ]
     },
